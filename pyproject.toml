@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "fastapi boilerplate template with mongodb, oauth2 bearer"
+version = "0.1.0"
+description = ""
+authors = ["dakohhh <wiizzydreadmill@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.111.0"
+mongoengine = "^0.28.2"
+uvicorn = "^0.29.0"
+PyJWT = "^2.8.0"
+beanie = "^1.26.0"
+python-dotenv = "^1.0.1"
+pydantic-settings = "^2.2.1"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.2.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
