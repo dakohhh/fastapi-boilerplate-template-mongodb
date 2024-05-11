@@ -1,5 +1,9 @@
+import os
+import certifi
 from pydantic import BaseModel, AnyUrl
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+CERTIFICATE = os.path.join(os.path.dirname(certifi.__file__), "cacert.pem")
 
 
 class Settings(BaseSettings):
@@ -7,25 +11,31 @@ class Settings(BaseSettings):
 
     APP_NAME: str = "BOILERPLATE TEMPLATE API"
 
+    APPLICATION_CERTIFICATE: str = CERTIFICATE
+
     model_config = SettingsConfigDict(env_file=".env")
+
 
 # Development-specific settings
 class DevelopmentSettings(Settings):
-    MONGODB_URL: AnyUrl = "mongodb://localhost:27017"
-    OPTION: str = 'development_value'
+    MONGODB_URL: str = "mongodb://localhost:27017"
+    MONGODB_NAME: str = "Boilerplate"
+    OPTION: str = "development_value"
+
 
 # Production-specific settings
 class ProductionSettings(Settings):
-    MONGODB_URL: AnyUrl
-    OPTION: str = 'production_value'
-
+    MONGODB_URL: str
+    OPTION: str = "production_value"
 
 
 # Determine environment and choose appropriate settings
-import os
+import dotenv
 
-if Settings.APP_NAME == "development":
-    print("Development settings loaded")
+dotenv.load_dotenv()
+
+
+if os.getenv("ENVIRONMENT") == "development":
     settings = DevelopmentSettings()
 else:
     settings = ProductionSettings()
